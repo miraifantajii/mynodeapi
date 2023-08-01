@@ -1,12 +1,11 @@
+import 'dotenv/config'
 import fastify from 'fastify'
-import { knex } from './database'
+import { toDoRoutes } from './routes/toDo'
 
 const app = fastify()
 
-app.get('/hello', async () => {
-  const test = knex('sqlite_schema').select('*')
-
-  return test
+app.register(toDoRoutes, {
+  prefix: 'todos',
 })
 
 app
