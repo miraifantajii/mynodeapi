@@ -53,12 +53,13 @@ export async function toDoRoutes(app: FastifyInstance) {
     })
 
     const updateTodoBodySchema = z.object({
+      name: z.string(),
       status: z.boolean(),
     })
 
     const { id } = updateTodoParamsSchema.parse(request.params)
 
-    const { status } = updateTodoBodySchema.parse(request.body)
+    const { name, status } = updateTodoBodySchema.parse(request.body)
 
     const todo = await knex('todo_list').count({
       id,
@@ -70,6 +71,7 @@ export async function toDoRoutes(app: FastifyInstance) {
           id,
         })
         .update({
+          name,
           status,
         })
     }
